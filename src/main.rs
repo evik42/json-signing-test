@@ -2,6 +2,7 @@ use std::io::{BufWriter, Write};
 use std::{fs, fs::File, path::PathBuf};
 use std::ops::Deref;
 
+use anyhow::Result;
 use clap::{Args, Parser, ValueEnum};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -44,13 +45,6 @@ struct Signature {
     signature_value: String,
 }
 
-#[derive(Deserialize)]
-struct UnknownSignature<'a> {
-    #[serde(borrow)]
-    signed_data: &'a RawValue,
-    signatures: Vec<Value>,
-}
-
 #[derive(Clone, Debug, Deserialize, Serialize, ValueEnum)]
 #[serde(rename_all = "kebab-case")]
 enum HashAlgorithm {
@@ -63,21 +57,20 @@ impl Default for HashAlgorithm {
     }
 }
 
-fn main() -> std::io::Result<()> {
+fn main() -> Result<()> {
     let command = GolemCertCli::parse();
     match &command {
         Verify { signed_data_file } => verify(signed_data_file),
-        Sign(parameters) => sign(parameters)?,
+        Sign(parameters) => sign(parameters),
     }
-    Ok(())
 }
 
-fn sign(parameters: &Sign) -> std::io::Result<()> {
-    let data = fs::read_to_string(&parameters.json_file).expect("Cannot read json data file");
-    let parsed_json: Value = serde_json::from_str(&data).expect("File contents is not valid json");
+fn sign(parameters: &Sign) -> Result<()> {
+    let data = fs::read_to_string(&parameters.json_file)?;
+    let parsed_json: Value = serde_json::from_str(&data)?;
     let prettify = SignedDataPrettify { signed_data: parsed_json, signatures: vec![] };
-    let pretty_string = serde_json::to_string_pretty(&prettify).expect("Cannot serialize to pretty string");
-    let mut signed_data: SignedData = serde_json::from_str(&pretty_string).expect("Cannot deserialize from pretty string");
+    let pretty_string = serde_json::to_string_pretty(&prettify)?;
+    let mut signed_data: SignedData = serde_json::from_str(&pretty_string)?;
 
     let hash_algorithm = parameters.hash_algorithm.clone().unwrap_or_default();
     let hash = create_digest(signed_data.signed_data.get(), &hash_algorithm);
@@ -93,21 +86,21 @@ fn sign(parameters: &Sign) -> std::io::Result<()> {
     Ok(())
 }
 
-fn verify(signed_data_file: &String) {
-    let signed_data_string = fs::read_to_string(signed_data_file).expect("Cannot read signed data file");
-    let signed_data: UnknownSignature = serde_json::from_str(&signed_data_string).expect("Signed data file does not comform to expected JSON schema");
+fn verify(signed_data_file: &String) -> Result<()> {
+    let signed_data_string = fs::read_to_string(signed_data_file)?;
+    let signed_data: SignedData = serde_json::from_str(&signed_data_string)?;
 
     for (idx, signature) in signed_data.signatures.iter().enumerate() {
-        let hash_algorithm = serde_json::from_value(signature["algorithm"].clone()).expect("Unknown signature algorithm for signature 0");
-        let stored_hash = hex::decode(&signature["signature_value"].as_str().unwrap()).expect("Cannot decode hash");
-        let hash = create_digest(signed_data.signed_data.get(), &hash_algorithm);
-        print!("Signature {} with hash type {:?} is ", idx, &hash_algorithm);
+        let stored_hash = hex::decode(&signature.signature_value)?;
+        let hash = create_digest(signed_data.signed_data.get(), &signature.algorithm);
+        print!("Signature {} is ", idx);
         if stored_hash.as_slice() == hash.deref() {
             println!("valid");
         } else {
             println!("INVALID");
         }
     }
+    Ok(())
 }
 
 fn create_digest(input: &str, hash_type: &HashAlgorithm) -> Vec<u8> {
