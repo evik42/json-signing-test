@@ -31,8 +31,8 @@
   },
   "signatures": [
     {
-      "algorithm": "sha256",
-      "signature_value": "aTk3a+Mt1ak45gC4oqt4xRCqctEBlZIqoTm9SPukGVw"
+      "algorithm": "sha3-256",
+      "signature_value": "dd71a1e1cb58d2add89ffef0853140f5cb82d32130a63b006e92964f41db2db0"
     }
   ]
 }
