@@ -1,0 +1,20 @@
+{
+  "$schema": "https://golem.network/schemas/v1/certificate.schema.json",
+  "subject": {
+    "displayName": "Root CA",
+    "contact": { "email": "noreply@example.com" }
+  },
+  "publicKey": {
+    "algorithm": "EdDSA",
+    "key": "7d154ddb6460d8f8a3ef4bc0ec700e91fca49ebea6470bfc42585e4cd6cb37d5",
+    "parameters": {
+      "scheme": "Ed25519"
+    }
+  },
+  "validity": {
+    "notBefore": "2000-01-01T00:00:00Z",
+    "notAfter" : "3000-01-01T00:00:00Z"
+  },
+  "permissions": "all",
+  "keyUsage": "all"
+}

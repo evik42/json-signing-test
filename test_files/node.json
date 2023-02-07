@@ -1,0 +1,11 @@
+{
+  "$schema": "https://golem.network/schemas/v1/node-permissions.schema.json",
+  "nodeId": "0xbb4527c8c2208d850016f6012216bb5337403339",
+  "permissions": {
+    "manifestOutbound": {
+      "urls": [
+        "http://golem.network"
+      ]
+    }
+  }
+}

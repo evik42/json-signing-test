@@ -1,0 +1,7 @@
+{
+  "algorithm": "EdDSA",
+  "key": "f64173e305f863459ee12f9975b2be4a67eaf309c3cc9abc4304135aa4a82a03",
+  "parameters": {
+    "scheme": "Ed25519"
+  }
+}

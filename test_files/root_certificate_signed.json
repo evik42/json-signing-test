@@ -1,0 +1,33 @@
+{
+  "signedData": {
+    "$schema": "https://golem.network/schemas/v1/certificate.schema.json",
+    "subject": {
+      "displayName": "Root CA",
+      "contact": {
+        "email": "noreply@example.com"
+      }
+    },
+    "publicKey": {
+      "algorithm": "EdDSA",
+      "key": "7d154ddb6460d8f8a3ef4bc0ec700e91fca49ebea6470bfc42585e4cd6cb37d5",
+      "parameters": {
+        "scheme": "Ed25519"
+      }
+    },
+    "validity": {
+      "notBefore": "2000-01-01T00:00:00Z",
+      "notAfter": "3000-01-01T00:00:00Z"
+    },
+    "permissions": "all",
+    "keyUsage": "all"
+  },
+  "signatures": [
+    {
+      "algorithm": {
+        "hashAlgorithm": "sha512",
+        "encryptionAlgorithm": "EdDSA"
+      },
+      "signatureValue": "31b5bd4a70c3e63f51f3d6d4f2eafa75213e2d3aee29f01f5ce834da2a9d1f1b663c07c43cbaf790f503d0bb73a15da756b66af51cc7922871dd3b9437acb80b"
+    }
+  ]
+}

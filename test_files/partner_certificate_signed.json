@@ -1,0 +1,68 @@
+{
+  "signedData": {
+    "$schema": "https://golem.network/schemas/v1/certificate.schema.json",
+    "subject": {
+      "displayName": "Partner",
+      "contact": {
+        "email": "noreply@example.com"
+      }
+    },
+    "publicKey": {
+      "algorithm": "EdDSA",
+      "key": "f64173e305f863459ee12f9975b2be4a67eaf309c3cc9abc4304135aa4a82a03",
+      "parameters": {
+        "scheme": "Ed25519"
+      }
+    },
+    "validity": {
+      "notBefore": "2023-02-01T00:00:00Z",
+      "notAfter": "2023-03-01T00:00:00Z"
+    },
+    "permissions": "all",
+    "keyUsage": [
+      "signNode"
+    ]
+  },
+  "signatures": [
+    {
+      "algorithm": {
+        "hashAlgorithm": "sha512",
+        "encryptionAlgorithm": "EdDSA"
+      },
+      "signatureValue": "0bf10ad0625299430dc3e914cf5f40f7497302c102d056cb772071745e0ba964e91942ba33f59bcccc4807d091ed24fa3916151dd5214ff1ac220e9d77abbc02",
+      "signer": {
+        "signedData": {
+    "$schema": "https://golem.network/schemas/v1/certificate.schema.json",
+    "subject": {
+      "displayName": "Root CA",
+      "contact": {
+        "email": "noreply@example.com"
+      }
+    },
+    "publicKey": {
+      "algorithm": "EdDSA",
+      "key": "7d154ddb6460d8f8a3ef4bc0ec700e91fca49ebea6470bfc42585e4cd6cb37d5",
+      "parameters": {
+        "scheme": "Ed25519"
+      }
+    },
+    "validity": {
+      "notBefore": "2000-01-01T00:00:00Z",
+      "notAfter": "3000-01-01T00:00:00Z"
+    },
+    "permissions": "all",
+    "keyUsage": "all"
+  },
+        "signatures": [
+          {
+            "algorithm": {
+              "hashAlgorithm": "sha512",
+              "encryptionAlgorithm": "EdDSA"
+            },
+            "signatureValue": "31b5bd4a70c3e63f51f3d6d4f2eafa75213e2d3aee29f01f5ce834da2a9d1f1b663c07c43cbaf790f503d0bb73a15da756b66af51cc7922871dd3b9437acb80b"
+          }
+        ]
+      }
+    }
+  ]
+}
